@@ -169,12 +169,15 @@ for i in range(5):
 The results are: 
 
 The Cross-validated Mean Squared Error for RF is : 87.96805891018424
+
 The Cross-validated Mean Squared Error for RF (Boosted) is : 38.44758294327894
 
 The Cross-validated Mean Squared Error for Linear Regression is : 115.94705718666674
+
 The Cross-validated Mean Squared Error for Linear Regression (Boosted) is : 54.96532335974295
 
 The Cross-validated Mean Squared Error for SVM is : 85.05483062682657
+
 The Cross-validated Mean Squared Error for SVM (Boosted) is : 53.00967236567205
 
 The Cross-validated Mean Squared Error for XGB is : 28.06138323921298
