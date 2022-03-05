@@ -146,7 +146,7 @@ for i in range(5):
     yhat_linear_boost = repeated_boosting(xtrain,ytrain,xtest,Tricubic,1,True,model_boosting,2)
     yhat_rf_boost = repeated_boosting(xtrain,ytrain,xtest,Tricubic,1,True,rf,2)
     yhat_svm_boost = repeated_boosting(xtrain,ytrain,xtest,Tricubic,1,True,svm,2)
-    model_xgb = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=1)
+    model_xgb = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=1)
     model_xgb.fit(xtrain,ytrain)
     yhat_xgb = model_xgb.predict(xtest)
     model_boosting.fit(xtrain, ytrain)
