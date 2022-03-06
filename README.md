@@ -254,6 +254,8 @@ The Cross-validated Mean Squared Error for SVM (Boosted) is : 36.99477059591091
 
 The Cross-validated Mean Squared Error for XGB is : 31.08846140470253
 
+XGBoost was a very effective supplement when repeatedly used on different regressors and lowered the MSE values quite substantially. 
+
 ### LightGBM
 LightGBM is a gradient boosting (tree-based) framework developed by Microsoft to improve upon accuracy, efficiency, and memory-usage of other boosting algorithms. XGBoost is the current star among boosting algorithms in terms of the accuracy that it produces; however, XGBoost can take more time to compute results. As a result, LightGBM aims to compete with its "lighter", speedier framework. LightGBM splits the decision tree by the leaf with the best fit. In contrast, other boosting algorithms split the tree based on depth. Splitting by the leaf has proven to be a very effective loss reduction technique that boosts accuracy. Furthermore, LightGBM uses a histogram-like approach and puts continuous features into bins to speed training time. We will be particularly comparing the accuracy of LightGBM to XGBoost in this paper.
 
