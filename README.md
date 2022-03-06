@@ -184,6 +184,39 @@ The Cross-validated Mean Squared Error for XGB is : 28.06138323921298
 
 Here we can see that boosting dramatically improved the performance of the linear regressor, random forest, and support vector machine regression. Extreme gradient boosting was the most effective method out of all that were tested, with a mean-squared error of 28.06. 
 
+We can also try using the random forest regressor as the booster instead of locally weighted linear regression. The function would now look like this.
+
+```
+def booster(X,y,xnew,kern,tau,model_boosting,nboost):
+  rf = RandomForestRegressor(n_estimators = 500, max_depth = 3)
+  Fx = rf.predict(X)
+  Fx_new = rf.predict(xnew)
+  new_y = y - Fx
+  output = Fx
+  output_new = Fx_new
+  for i in range(nboost):
+    model_boosting.fit(X,new_y)
+    output += model_boosting.predict(X)
+    output_new += model_boosting.predict(xnew)
+    new_y = y - output
+  return output_new
+```
+
+Running the same cross validation above, we get these results. 
+
+
+The Cross-validated Mean Squared Error for RF is : 87.52130611087539
+The Cross-validated Mean Squared Error for RF (Boosted) is : 36.52349655263144
+
+The Cross-validated Mean Squared Error for Linear Regression is : 116.05239179871771
+The Cross-validated Mean Squared Error for Linear Regression (Boosted) is : 52.46472135730549
+
+The Cross-validated Mean Squared Error for SVM is : 84.27651979574426
+The Cross-validated Mean Squared Error for SVM (Boosted) is : 50.01519883788048
+
+The Cross-validated Mean Squared Error for XGB is : 26.57816966194696
+
+Random forest regressor as a booster yielded slightly better results but extreme gradient boosting is still the winner. 
 
 ### LightGBM
 LightGBM is a gradient boosting (tree-based) framework developed by Microsoft to improve upon accuracy, efficiency, and memory-usage of other boosting algorithms. XGBoost is the current star among boosting algorithms in terms of the accuracy that it produces; however, XGBoost can take more time to compute results. As a result, LightGBM aims to compete with its "lighter", speedier framework. LightGBM splits the decision tree by the leaf with the best fit. In contrast, other boosting algorithms split the tree based on depth. Splitting by the leaf has proven to be a very effective loss reduction technique that boosts accuracy. Furthermore, LightGBM uses a histogram-like approach and puts continuous features into bins to speed training time. We will be particularly comparing the accuracy of LightGBM to XGBoost in this paper.
