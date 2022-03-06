@@ -187,8 +187,9 @@ Here we can see that boosting dramatically improved the performance of the linea
 We can also try using the random forest regressor as the booster instead of locally weighted linear regression. The function would now look like this.
 
 ```
-def booster(X,y,xnew,kern,tau,model_boosting,nboost):
+def repeated_boosting(X, y, xnew, kern, tau, intercept, model_boosting, nboost):
   rf = RandomForestRegressor(n_estimators = 500, max_depth = 3)
+  rf.fit(X,y)
   Fx = rf.predict(X)
   Fx_new = rf.predict(xnew)
   new_y = y - Fx
@@ -204,22 +205,54 @@ def booster(X,y,xnew,kern,tau,model_boosting,nboost):
 
 Running the same cross validation above, we get these results. 
 
-
-The Cross-validated Mean Squared Error for RF is : 87.52130611087539
-
-The Cross-validated Mean Squared Error for RF (Boosted) is : 36.52349655263144
+The Cross-validated Mean Squared Error for RF is : 86.8873930596584
 
 The Cross-validated Mean Squared Error for Linear Regression is : 116.05239179871771
 
-The Cross-validated Mean Squared Error for Linear Regression (Boosted) is : 52.46472135730549
+The Cross-validated Mean Squared Error for Linear Regression (Boosted) is : 61.397216241160855
 
 The Cross-validated Mean Squared Error for SVM is : 84.27651979574426
 
-The Cross-validated Mean Squared Error for SVM (Boosted) is : 50.01519883788048
+The Cross-validated Mean Squared Error for SVM (Boosted) is : 46.512191786451105
 
-The Cross-validated Mean Squared Error for XGB is : 26.57816966194696
+The Cross-validated Mean Squared Error for XGB is : 31.08846140470253
 
-Random forest regressor as a booster yielded slightly better results but extreme gradient boosting is still the winner. 
+Random forest regressor as a booster yielded slightly better results for certain regressors like SVM but extreme gradient boosting is still the winner.
+
+
+Here are the results when using xgb as the booster. 
+
+```
+def repeated_boosting(X, y, xnew, kern, tau, intercept, model_boosting, nboost):
+  model_xgb = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=1)
+  model_xgb.fit(X,y)
+  Fx = model_xgb.predict(X)
+  Fx_new = model_xgb.predict(xnew)
+  new_y = y - Fx
+  output = Fx
+  output_new = Fx_new
+  for i in range(nboost):
+    model_boosting.fit(X,new_y)
+    output += model_boosting.predict(X)
+    output_new += model_boosting.predict(xnew)
+    new_y = y - output
+  return output_new
+
+```
+
+The Cross-validated Mean Squared Error for RF is : 86.95616892245656
+
+The Cross-validated Mean Squared Error for RF (Boosted) is : 33.624594883976734
+
+The Cross-validated Mean Squared Error for Linear Regression is : 116.05239179871771
+
+The Cross-validated Mean Squared Error for Linear Regression (Boosted) is : 46.69190224432877
+
+The Cross-validated Mean Squared Error for SVM is : 84.27651979574426
+
+The Cross-validated Mean Squared Error for SVM (Boosted) is : 36.99477059591091
+
+The Cross-validated Mean Squared Error for XGB is : 31.08846140470253
 
 ### LightGBM
 LightGBM is a gradient boosting (tree-based) framework developed by Microsoft to improve upon accuracy, efficiency, and memory-usage of other boosting algorithms. XGBoost is the current star among boosting algorithms in terms of the accuracy that it produces; however, XGBoost can take more time to compute results. As a result, LightGBM aims to compete with its "lighter", speedier framework. LightGBM splits the decision tree by the leaf with the best fit. In contrast, other boosting algorithms split the tree based on depth. Splitting by the leaf has proven to be a very effective loss reduction technique that boosts accuracy. Furthermore, LightGBM uses a histogram-like approach and puts continuous features into bins to speed training time. We will be particularly comparing the accuracy of LightGBM to XGBoost in this paper.
