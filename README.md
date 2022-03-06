@@ -478,3 +478,15 @@ Starting predicting...
 The MSE of LightGBM is: 19.962227424914815
 
 LightGBM produced a remarkably low MSE value using the same dataset and standardization procedures, even compared to XGBoost. LightGBM also ran very fast in comparison to the other regressor methods. We conclude that LightGBM is an efficient and effective method to improve regressor scores. 
+
+### References: 
+Bachman, E. (2020, March 27). Light GBM vs XGBOOST: Which algorithm takes the Crown. Analytics Vidhya. Retrieved March 6, 2022, from https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/ 
+
+Microsoft. (2021, December 26). Lightgbm/simple_example.py at master · Microsoft/Lightgbm. GitHub. Retrieved March 6, 2022, from https://github.com/microsoft/LightGBM/blob/master/examples/python-guide/simple_example.py 
+
+Rocca, J. (2021, March 21). Ensemble methods: Bagging, boosting and stacking. Medium. Retrieved March 6, 2022, from https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205 
+
+Singh, A. (2020, April 20). Boosting algorithms in machine learning. Analytics Vidhya. Retrieved March 6, 2022, from https://www.analyticsvidhya.com/blog/2020/02/4-boosting-algorithms-machine-learning/ 
+
+Welcome to LIGHTGBM's documentation!. Welcome to LightGBM's documentation! - LightGBM 3.3.2.99 documentation. (2022). Retrieved March 6, 2022, from https://lightgbm.readthedocs.io/en/latest/ 
+
