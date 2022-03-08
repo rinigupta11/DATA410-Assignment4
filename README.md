@@ -25,7 +25,7 @@ import lightgbm as lgb
 
 ## Multiple Boosting
 
-Boosting is a popular method to improve the performance of a regressor. Multiple boosting involves boosting a regressor more than one time to further improve performance. I wrote a function that can perform the boosting k number of times. This algorithm uses the locally weighted linear regression model to boost another regression model. Specifically, we initially subtract the lowess prediction values from the target values. We store a variable that will cumulatively change value called output as we create new predictions using the model_boosting model passed in as a parameter. This iterative process results in repeated boosting of the model_boosting regressor passed in. 
+Boosting is a popular method to improve the performance of a regressor by turning weaker learners into stronger learners through a sequential process. Boosting once is useful for reducing variance. Some boosting algorithms perform gradient descent with a cost minimization surface. Multiple boosting involves boosting a regressor more than one time to further improve performance because the final regressor is even stronger from all the weaker learners that it combined. I wrote a function that can perform the boosting k number of times. This algorithm uses the locally weighted linear regression model to boost another regression model. In later cases below, we will use other regressors besides lowess for the boosting. Specifically, we initially subtract the lowess prediction values from the target values. We store a variable that will cumulatively change value called output as we create new predictions using the model_boosting model passed in as a parameter. This iterative process results in repeated boosting of the model_boosting regressor passed in. Kaggle has cited multiple boosting and combining different boosting techniques as one of the ways people scored the highest in competitions. 
 
 ```
 # Tricubic Kernel
@@ -257,7 +257,7 @@ The Cross-validated Mean Squared Error for XGB is : 31.08846140470253
 XGBoost was a very effective supplement when repeatedly used on different regressors and lowered the MSE values quite substantially. 
 
 ### LightGBM
-LightGBM is a gradient boosting (tree-based) framework developed by Microsoft to improve upon accuracy, efficiency, and memory-usage of other boosting algorithms. XGBoost is the current star among boosting algorithms in terms of the accuracy that it produces; however, XGBoost can take more time to compute results. As a result, LightGBM aims to compete with its "lighter", speedier framework. LightGBM splits the decision tree by the leaf with the best fit. In contrast, other boosting algorithms split the tree based on depth. Splitting by the leaf has proven to be a very effective loss reduction technique that boosts accuracy. Furthermore, LightGBM uses a histogram-like approach and puts continuous features into bins to speed training time. We will be particularly comparing the accuracy of LightGBM to XGBoost in this paper.
+LightGBM is a gradient boosting (tree-based) framework developed by Microsoft to improve upon accuracy, efficiency, and memory-usage of other boosting algorithms. XGBoost is the current star among boosting algorithms in terms of the accuracy that it produces; however, XGBoost can take more time to compute results. As a result, LightGBM aims to compete with its "lighter", speedier framework. LightGBM splits the decision tree by the leaf with the best fit. The way that LightGBM chooses the leaf is by finding the split that will create the greatest loss decrease. In contrast, other boosting algorithms split the tree based on depth. Splitting by the leaf has proven to be a very effective loss reduction technique that boosts accuracy. Furthermore, LightGBM uses a histogram-like approach and puts continuous features into bins to speed training time. This approach has been demonstrated to dramatically increase time and space complexity. The two specific techniques that are part of the LightGBM algorithm are Exclusive Feature Bundling (a feature reduction technique) and Gradient-Based One Side Sampling (higher gradients contribute more information). We will be particularly comparing the accuracy of LightGBM to XGBoost in this paper.
 
 ![image](https://user-images.githubusercontent.com/76021844/156649680-3fba1f2b-7054-455a-aed5-0782d030d045.png)
 
@@ -482,6 +482,8 @@ LightGBM produced a remarkably low MSE value using the same dataset and standard
 ### References: 
 Bachman, E. (2020, March 27). Light GBM vs XGBOOST: Which algorithm takes the Crown. Analytics Vidhya. Retrieved March 6, 2022, from https://www.analyticsvidhya.com/blog/2017/06/which-algorithm-takes-the-crown-light-gbm-vs-xgboost/ 
 
+Ke, Guolin; Meng, Qi; Finley, Thomas; Wang, Taifeng; Chen, Wei; Ma, Weidong; Ye, Qiwei; Liu, Tie-Yan (2017). "LightGBM: A Highly Efficient Gradient Boosting Decision Tree". Advances in Neural Information Processing Systems.
+
 Microsoft. (2021, December 26). Lightgbm/simple_example.py at master · Microsoft/Lightgbm. GitHub. Retrieved March 6, 2022, from https://github.com/microsoft/LightGBM/blob/master/examples/python-guide/simple_example.py 
 
 Rocca, J. (2021, March 21). Ensemble methods: Bagging, boosting and stacking. Medium. Retrieved March 6, 2022, from https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205 
@@ -489,4 +491,6 @@ Rocca, J. (2021, March 21). Ensemble methods: Bagging, boosting and stacking. Me
 Singh, A. (2020, April 20). Boosting algorithms in machine learning. Analytics Vidhya. Retrieved March 6, 2022, from https://www.analyticsvidhya.com/blog/2020/02/4-boosting-algorithms-machine-learning/ 
 
 Welcome to LIGHTGBM's documentation!. Welcome to LightGBM's documentation! - LightGBM 3.3.2.99 documentation. (2022). Retrieved March 6, 2022, from https://lightgbm.readthedocs.io/en/latest/ 
+
+
 
